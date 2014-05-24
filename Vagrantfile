@@ -21,6 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 80, host: 8080
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -119,4 +120,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # chef-validator, unless you changed the configuration.
   #
   #   chef.validation_client_name = "ORGNAME-validator"
+
+  config.vm.provision "shell", inline: <<-EOF
+  sudo apt-get update
+  
+  sudo apt-get install curl libcurl3
+  
+  \\curl -L https://get.rvm.io | bash -s stable --ruby
+
+  source ~/.profile
+
+  sudo apt-get install libc-ares2 libev4 libicu48 libv8-3.7.12.22 nodejs
+
+  
+
+  EOF
 end
